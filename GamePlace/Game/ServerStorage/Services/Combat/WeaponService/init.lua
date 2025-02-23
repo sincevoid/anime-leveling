@@ -233,14 +233,11 @@ function WeaponService.KnitStart()
 		end
 		Weapons[weapon.Name] = require(weapon)
 	end
-end
-function WeaponService.KnitInit()
-	print(Weapons)
+
 	for _, weapon in Weapons do
 		if weapon.Start then
 			weapon.Start(Weapons.Default)
 		end
 	end
 end
-
 return WeaponService

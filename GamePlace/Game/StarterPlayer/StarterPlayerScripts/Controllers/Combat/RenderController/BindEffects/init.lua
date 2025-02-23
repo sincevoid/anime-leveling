@@ -17,21 +17,19 @@ function BindEffects.CustomAdd(RenderData)
 			Highlight.FillTransparency = 1
 			Highlight.OutlineTransparency = 1
 
-			TweenService:Create(Highlight, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {FillTransparency = 0, OutlineTransparency = 0}):Play()
+			TweenService:Create(
+				Highlight,
+				TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
+				{ FillTransparency = 0, OutlineTransparency = 0 }
+			):Play()
 			Highlight.Parent = RenderData.casterHumanoid.Parent
 		end,
-		Loot_E = function()
-		end,
-		Loot_D = function()
-		end,
-		Loot_C = function()
-		end,
-		Loot_B = function()
-		end,
-		Loot_A = function()
-		end,
-		Loot_S = function()
-		end
+		Loot_E = function() end,
+		Loot_D = function() end,
+		Loot_C = function() end,
+		Loot_B = function() end,
+		Loot_A = function() end,
+		Loot_S = function() end,
 	}
 
 	if Effects[RenderData.arguments] then
@@ -61,7 +59,7 @@ end
 
 function BindEffects.Add(RenderData)
 	local casterHumanoid: Humanoid = RenderData.casterHumanoid
-	local effect: string = RenderData.arguments 
+	local effect: string = RenderData.arguments
 
 	local Effect = game.ReplicatedStorage.VFX:FindFirstChild(effect, true)
 
@@ -87,7 +85,7 @@ function BindEffects.Add(RenderData)
 			AssemblyPart(v)
 		end
 	end
-	
+
 	if RenderData.NotHumanoid :: boolean then
 		local Weld = Instance.new("WeldConstraint")
 		Weld.Part0 = casterHumanoid
@@ -106,13 +104,12 @@ function BindEffects.Add(RenderData)
 		EffectClone.Parent = casterHumanoid.Parent
 	end
 
-
 	RenderController:EmitParticles(EffectClone)
 end
 
 function BindEffects.Remove(RenderData)
 	local casterHumanoid: Humanoid = RenderData.casterHumanoid
-	local effect: string = RenderData.arguments 
+	local effect: string = RenderData.arguments
 
 	local haveEffect = RenderController:GetInstance(BindEffects, casterHumanoid, effect)
 	if not haveEffect then

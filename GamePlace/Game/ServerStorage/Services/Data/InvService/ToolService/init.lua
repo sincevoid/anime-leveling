@@ -14,16 +14,15 @@ local ToolsModules = {}
 
 --[[
 	Service responsavel por carregar as tools do player com base no inventário dele,
-	receber os inputs eventos/inputs das tools (Equipped, Unequipped e Activated) e chamar 
+	receber os inputs eventos/inputs das tools (Equipped, Unequipped e Activated) e chamar
 	as funcoes de cada uma.
 ]]
 
-
 --[[
-	Recebe os eventos das tools, é possivel criar modulos para cada Classe de tool assim fazendo todas as tools que 
+	Recebe os eventos das tools, é possivel criar modulos para cada Classe de tool assim fazendo todas as tools que
 	tiverem aquela classe utilizarem ela como "Default" ou abstrair para um modulo especifico da tool, utilizando o nome da tool.
 ]]
-function ToolService:ToolInput(Character: Model, Action: string, Data: {any})
+function ToolService:ToolInput(Character: Model, Action: string, Data: { any })
 	local Player = Players:GetPlayerFromCharacter(Character)
 	local Tool = ToolService:GetEquippedTool(Player)
 	assert(Tool, `Tool not found\n{debug.traceback()}`)
@@ -49,7 +48,7 @@ function ToolService:ToolInput(Character: Model, Action: string, Data: {any})
 		end
 	end
 end
-function ToolService.Client:ToolInput(Player: Player, Action: string, Data: {any})
+function ToolService.Client:ToolInput(Player: Player, Action: string, Data: { any })
 	self.Server:ToolInput(Player.Character, Action, Data)
 end
 
@@ -96,6 +95,8 @@ end
 -- [[ Carrega todas as tools que estão na Data do player (Inventory) ]]
 function ToolService:LoadPlayerTools(Player: Player)
 	local PlayerData = PlayerService:GetData(Player)
+
+	print(PlayerData.Inventory)
 
 	ToolService:ClearPlayerTools(Player)
 
@@ -149,7 +150,7 @@ end
 function ToolService.KnitInit()
 	for _, tool in script:GetDescendants() do
 		if tool:IsA("ModuleScript") then
-			ToolsModules[tool.Name] = tool
+			ToolsModules[tool.Name] = require(tool)
 		end
 	end
 end

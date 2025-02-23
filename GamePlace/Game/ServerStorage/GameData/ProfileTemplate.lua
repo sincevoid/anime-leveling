@@ -35,7 +35,6 @@ return {
 					["1"] = false,
 					["2"] = false,
 					["3"] = false,
-					
 				},
 				["SkillsTreeUnlocked"] = { ["1"] = true },
 

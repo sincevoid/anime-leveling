@@ -99,9 +99,241 @@ local function CreateHumanoidDescription(desc: { [string]: any }): HumanoidDescr
 end
 
 return {
-	profileKey = "DEVELOPMENT_13",
+	profileKey = "DEVELOPMENT_16 ",
 	profileTemplate = ProfileTemplate,
-	defaultInventory = {},
+	defaultInventory = {
+		VenomsFangs = {
+			Name = "VenomsFangs",
+			DisplayName = "Venom's Fangs",
+			Class = "Weapon",
+			Type = "Dagger",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		StarterSword = {
+			Name = "StarterSword",
+			DisplayName = "Starter Sword",
+
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 10,
+			Rarity = "E", --| "D" | "C" | "B" | "A" | "S"
+			RarityNum = 60,
+			SubRarity = "I", --| "II" | "III" | "IV" | "V"
+		},
+		IronStarterSword = {
+			Name = "IronStarterSword",
+			DisplayName = "Iron Starter Sword",
+
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 20,
+			RarityNum = 50,
+			Rarity = "E",
+			SubRarity = "II", -- "II" | "III" | "IV" | "V"
+		},
+		LuxurySword = {
+			Name = "LuxurySword",
+			DisplayName = "Luxury Sword",
+
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 30,
+			RarityNum = 40,
+			Rarity = "D",
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		MaousSword = {
+			Name = "MaousSword",
+			DisplayName = "Maou's Sword",
+			HitEffect = "Lightning",
+
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 50,
+			RarityNum = 2,
+			Rarity = "S",
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		OrcBroadsword = {
+			Name = "OrcBroadsword",
+			DisplayName = "Orc Broadsword",
+
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 40,
+			RarityNum = 10,
+			Rarity = "A",
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		CrimsonBroadsword = {
+			Name = "CrimsonBroadsword",
+			DisplayName = "Crimson Broadsword",
+
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 60,
+			RarityNum = 2,
+			Rarity = "S",
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		Fists = {
+			Name = "Fists",
+			DisplayName = "Fists",
+			Class = "Weapon",
+			Type = "Melee",
+			Rank = "E",
+			Id = 1,
+		},
+
+		GoldenGauntlets = {
+			Name = "GoldenGauntlets",
+			DisplayName = "Golden Gauntlets",
+
+			Class = "Weapon",
+			Type = "Melee",
+			Damage = 10,
+			Rarity = "A",
+			RarityNum = 10,
+			SubRarity = "I",
+		},
+		Nyon = {
+			Name = "Nyon",
+			DisplayName = "Nyon",
+			DevSpec = true,
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 20,
+			Rarity = "S",
+			RarityNum = -1,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+
+		Mister = {
+			Name = "Mister",
+			DisplayName = "Mister",
+			DevSpec = true,
+			Class = "Weapon",
+			Type = "Sword",
+			Damage = 30,
+			Rarity = "S",
+			RarityNum = -1,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+
+		Omnitrix = {
+			Name = "Omnitrix",
+			DisplayName = "Omnitrix",
+			DevSpec = true,
+			Class = "Weapon",
+			Type = "Melee",
+			Damage = 300,
+			Rarity = "S",
+			RarityNum = -1,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		TestStaff = {
+			Name = "TestStaff",
+			DisplayName = "Test Staff",
+
+			Class = "Weapon",
+			Type = "Staff",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 70,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		FlashStrike = {
+			Name = "FlashStrike",
+			DisplayName = "Flash Strike",
+
+			Class = "Skill",
+			Type = "Sword",
+		},
+		MoltenSmash = {
+			Name = "MoltenSmash",
+			DisplayName = "Molten Smash",
+
+			Class = "Skill",
+			Type = "Fire",
+		},
+
+		CinderCutter = {
+			Name = "CinderCutter",
+			DisplayName = "Cinder Cutter",
+
+			Class = "Skill",
+			Type = "Fire",
+		},
+		Axe = {
+			Name = "Axe",
+			DisplayName = "Axe",
+
+			Class = "Weapon",
+			Type = "Axe",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		Katana = {
+			Name = "Katana",
+			DisplayName = "Katana",
+
+			Class = "Weapon",
+			Type = "Katana",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		Spear = {
+			Name = "Spear",
+			DisplayName = "Spear",
+
+			Class = "Weapon",
+			Type = "Spear",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		Dagger = {
+			Name = "Dagger",
+			DisplayName = "Dagger",
+
+			Class = "Weapon",
+			Type = "Dagger",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		Pistols = {
+			Name = "Pistols",
+			DisplayName = "Pistols",
+
+			Class = "Weapon",
+			Type = "Pistols",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+		Shield = {
+			Name = "Shield",
+			DisplayName = "Shield",
+
+			Class = "Weapon",
+			Type = "Shield",
+			Damage = 5,
+			Rarity = "E",
+			RarityNum = 60,
+			SubRarity = "I", -- "II" | "III" | "IV" | "V"
+		},
+	},
 	gameItems = require(script.Items),
 	gameSkills = require(script.Skills),
 	newbieBadge = 2066631008828576,

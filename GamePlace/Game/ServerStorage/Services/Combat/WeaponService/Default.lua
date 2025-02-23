@@ -11,7 +11,6 @@ local RagdollService
 
 local Validate = require(game.ReplicatedStorage.Validate)
 
-
 local Default = {
 	Attack = function(Character, Data)
 		local Humanoid = Character.Humanoid
@@ -54,10 +53,12 @@ local Default = {
 					or Humanoid:GetAttribute("Deflected")
 				then
 					return false
-				end				
+				end
 				if
 					DamageService:GetHitContext(Enemy.Humanoid) == "Hit"
-					and Humanoid:GetAttribute("ComboCounter") - #AnimationsFolder:GetChildren() == -3 and not Enemy.Humanoid:GetAttribute("DeflectTime") and not Enemy.Humanoid:GetAttribute("Block")
+					and Humanoid:GetAttribute("ComboCounter") - #AnimationsFolder:GetChildren() == -3
+					and not Enemy.Humanoid:GetAttribute("DeflectTime")
+					and not Enemy.Humanoid:GetAttribute("Block")
 				then
 					RagdollService:Ragdoll(Enemy, 1)
 
@@ -67,7 +68,7 @@ local Default = {
 						* WeaponService:GetModelMass(Enemy.Parent)
 					)
 				end
-				
+
 				WeaponService:TriggerHittedEvent(Enemy.Humanoid, Humanoid)
 				return DamageService:TryHit(Enemy.Humanoid, Humanoid, Damage, HitEffect)
 			end)

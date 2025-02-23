@@ -1,5 +1,4 @@
 {
-    "files.autoSave": "off",
     "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.minimap.enabled": false,
@@ -8,10 +7,5 @@
     "editor.rulers": [
         120,
         180
-    ],
-	"editor.codeActionsOnSave": {},
-    "editor.defaultFormatter": "lixvbnet.styluafork",
-    "robloxLsp.diagnostics.globals": [
-        "SakasamaNoSekaiSeNaSeNaSeNaSakasamaNoSekaiSakasamaNoSekaiSeNaSeNaSakasamaNoSekaiSakasamaNoSekaiSeNaSakasamaNoSekaiSakasamaNSakasamaNoSekaiSakasamaNoSekai"
     ],
 }

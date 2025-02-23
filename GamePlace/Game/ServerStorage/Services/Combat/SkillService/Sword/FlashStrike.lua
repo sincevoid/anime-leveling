@@ -13,7 +13,7 @@ local Validate = require(game.ReplicatedStorage.Validate)
 
 local FlashStrike = {}
 
-local Cooldown = 20
+local Cooldown = 5
 function FlashStrike.Charge(Humanoid: Humanoid, Data: { any })
 	DebounceService:AddDebounce(Humanoid, "FlashStrike", Cooldown, true)
 	SkillService:SetSkillState(Humanoid, "FlashStrike", "Charge")

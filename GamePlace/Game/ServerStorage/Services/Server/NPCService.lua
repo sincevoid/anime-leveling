@@ -76,6 +76,7 @@ function NPC.new(Character: Model)
 	--// ProximityPrompt
 	local ProximityPrompt = Instance.new("ProximityPrompt")
 	ProximityPrompt.Parent = Character
+	ProximityPrompt.ClickablePrompt = false
 	ProximityPrompt.ActionText = "Talk"
 	ProximityPrompt.ObjectText = Name
 	ProximityPrompt.MaxActivationDistance = 5

@@ -89,6 +89,7 @@ function DropService:DropItems(HumanoidDied: Humanoid, Drops, HighestRank)
 	Prompt.ActionText = "Loot"
 	Prompt.RequiresLineOfSight = false
 	Prompt.ObjectText = "ItemName"
+	Prompt.ClickablePrompt = false
 	Prompt.MaxActivationDistance = 25
 	Prompt.HoldDuration = 1
 	Prompt.Style = Enum.ProximityPromptStyle.Custom

@@ -68,124 +68,124 @@ function DoubleJump:Init()
 
 						doubleJumpTrack:Play()
 
-						task.spawn(function()
-							repeat
-								RunService.RenderStepped:Wait()
-
-								DebugService.AttachPart = true
-
-								local params = RaycastParams.new()
-								params.FilterType = Enum.RaycastFilterType.Exclude
-								params.RespectCanCollide = true
-								params.FilterDescendantsInstances = { char, workspace:FindFirstChild("Debug") }
-
-								local rayResult = workspace:Spherecast(
-									player.Character.Head.CFrame.Position,
-									4,
-									Vector3.new(1, 10, 1),
-									params
-								)
-
-								if rayResult then
-									if rayResult.Instance then
-										local msize = 0
-										local inst = rayResult.Instance
-										if inst:IsA("Model") then
-											msize = inst:GetExtentsSize().Magnitude
-										elseif inst:IsA("BasePart") then
-											msize = inst.Size.Magnitude
-										end
-
-										if msize > 50 then
-											continue
-										end
-
-										local rootPartLocation = char:GetPivot().Position
-											- humanoid.RootPart.CFrame.Position
-
-										stopPlayingTracks(animator)
-
-										local size = char:GetExtentsSize()
-
-										local y, x, z = char:GetPivot():ToOrientation()
-										local position = rayResult.Position - Vector3.new(0, size.Y * 0.4, 0)
-										local cframe = CFrame.new(position) * CFrame.fromEulerAnglesYXZ(y, x, z)
-
-										local rootpartP = cframe * CFrame.new(rootPartLocation)
-										local rootpartE = humanoid.RootPart.Size
-
-										local part = Instance.new("Part", workspace)
-
-										local ovp = OverlapParams.new()
-										ovp.FilterDescendantsInstances = { char, part }
-										ovp.FilterType = Enum.RaycastFilterType.Exclude
-
-										part.Anchored = true
-										part.CanCollide = false
-										part.Transparency = 1
-										part.CFrame = rootpartP
-										part.Size = rootpartE
-										part.Massless = true
-										part.Name = "CollideChecker"
-
-										local collideParts = workspace:GetPartsInPart(part, ovp)
-										if #collideParts > 0 then
-											part:Destroy()
-											continue
-										end
-
-										--> ===================================================
-
-										part:Destroy()
-
-										local Animation = Instance.new("Animation")
-										Animation.AnimationId = "rbxassetid://17734821435"
-										local AnimationTrack: AnimationTrack = playAnimation(Animation, animator)
-										char.PrimaryPart.Anchored = true
-										humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, true)
-										humanoid:ChangeState(Enum.HumanoidStateType.StrafingNoPhysics)
-
-										local speedPerSecond = 15
-										RunService:BindToRenderStep(
-											"Grabbing",
-											Enum.RenderPriority.Character.Value,
-											function(deltaTime)
-												char:PivotTo(char:GetPivot():Lerp(cframe, deltaTime * speedPerSecond))
-											end
-										)
-
-										task.delay(0.25, function()
-											GrabService:Grab(cframe)
-										end)
-
-										char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
-										char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
-
-										local connection
-										connection = uis.InputBegan:Connect(function(input, gpe)
-											if gpe then
-												return
-											end
-
-											if input.KeyCode == Enum.KeyCode.Space then
-												connection:Disconnect()
-												char.PrimaryPart.Anchored = false
-												humanoid:SetStateEnabled(
-													Enum.HumanoidStateType.StrafingNoPhysics,
-													false
-												)
-												humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-												AnimationTrack:Stop(0)
-												RunService:UnbindFromRenderStep("Grabbing")
-												GrabService:Ungrab()
-											end
-										end)
-
-										break
-									end
-								end
-							until tick() - timerStart >= 0.5
-						end)
+						--task.spawn(function()
+						--	repeat
+						--		RunService.RenderStepped:Wait()
+						--
+						--		DebugService.AttachPart = true
+						--
+						--		local params = RaycastParams.new()
+						--		params.FilterType = Enum.RaycastFilterType.Exclude
+						--		params.RespectCanCollide = true
+						--		params.FilterDescendantsInstances = { char, workspace:FindFirstChild("Debug") }
+						--
+						--		local rayResult = workspace:Spherecast(
+						--			player.Character.Head.CFrame.Position,
+						--			4,
+						--			Vector3.new(1, 10, 1),
+						--			params
+						--		)
+						--
+						--		if rayResult then
+						--			if rayResult.Instance then
+						--				local msize = 0
+						--				local inst = rayResult.Instance
+						--				if inst:IsA("Model") then
+						--					msize = inst:GetExtentsSize().Magnitude
+						--				elseif inst:IsA("BasePart") then
+						--					msize = inst.Size.Magnitude
+						--				end
+						--
+						--				if msize > 50 then
+						--					continue
+						--				end
+						--
+						--				local rootPartLocation = char:GetPivot().Position
+						--					- humanoid.RootPart.CFrame.Position
+						--
+						--				stopPlayingTracks(animator)
+						--
+						--				local size = char:GetExtentsSize()
+						--
+						--				local y, x, z = char:GetPivot():ToOrientation()
+						--				local position = rayResult.Position - Vector3.new(0, size.Y * 0.4, 0)
+						--				local cframe = CFrame.new(position) * CFrame.fromEulerAnglesYXZ(y, x, z)
+						--
+						--				local rootpartP = cframe * CFrame.new(rootPartLocation)
+						--				local rootpartE = humanoid.RootPart.Size
+						--
+						--				local part = Instance.new("Part", workspace)
+						--
+						--				local ovp = OverlapParams.new()
+						--				ovp.FilterDescendantsInstances = { char, part }
+						--				ovp.FilterType = Enum.RaycastFilterType.Exclude
+						--
+						--				part.Anchored = true
+						--				part.CanCollide = false
+						--				part.Transparency = 1
+						--				part.CFrame = rootpartP
+						--				part.Size = rootpartE
+						--				part.Massless = true
+						--				part.Name = "CollideChecker"
+						--
+						--				local collideParts = workspace:GetPartsInPart(part, ovp)
+						--				if #collideParts > 0 then
+						--					part:Destroy()
+						--					continue
+						--				end
+						--
+						--				--> ===================================================
+						--
+						--				part:Destroy()
+						--
+						--				local Animation = Instance.new("Animation")
+						--				Animation.AnimationId = "rbxassetid://17734821435"
+						--				local AnimationTrack: AnimationTrack = playAnimation(Animation, animator)
+						--				char.PrimaryPart.Anchored = true
+						--				humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, true)
+						--				humanoid:ChangeState(Enum.HumanoidStateType.StrafingNoPhysics)
+						--
+						--				local speedPerSecond = 15
+						--				RunService:BindToRenderStep(
+						--					"Grabbing",
+						--					Enum.RenderPriority.Character.Value,
+						--					function(deltaTime)
+						--						char:PivotTo(char:GetPivot():Lerp(cframe, deltaTime * speedPerSecond))
+						--					end
+						--				)
+						--
+						--				task.delay(0.25, function()
+						--					GrabService:Grab(cframe)
+						--				end)
+						--
+						--				char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
+						--				char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
+						--
+						--				local connection
+						--				connection = uis.InputBegan:Connect(function(input, gpe)
+						--					if gpe then
+						--						return
+						--					end
+						--
+						--					if input.KeyCode == Enum.KeyCode.Space then
+						--						connection:Disconnect()
+						--						char.PrimaryPart.Anchored = false
+						--						humanoid:SetStateEnabled(
+						--							Enum.HumanoidStateType.StrafingNoPhysics,
+						--							false
+						--						)
+						--						humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+						--						AnimationTrack:Stop(0)
+						--						RunService:UnbindFromRenderStep("Grabbing")
+						--						GrabService:Ungrab()
+						--					end
+						--				end)
+						--
+						--				break
+						--			end
+						--		end
+						--	until tick() - timerStart >= 0.5
+						--end)
 
 						humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 						SFX:Apply(char.HumanoidRootPart, "Jump")

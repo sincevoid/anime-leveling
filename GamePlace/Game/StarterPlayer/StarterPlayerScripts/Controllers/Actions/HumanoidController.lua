@@ -7,6 +7,7 @@ local CameraEvent = ReplicatedStorage:WaitForChild("Events"):WaitForChild("CAMER
 
 local PlayerService
 local CameraController
+local StateController
 
 local HumanoidHandler = Knit.CreateController({
 	Name = "HumanoidHandler",
@@ -74,6 +75,9 @@ function HumanoidHandler:BindHumanoid(Humanoid: Humanoid)
 	Humanoid.HealthChanged:Connect(update)
 	update()
 
+	ReplicatedStorage.Events.StateChanged.Event:Connect(function(old, new)
+		
+	end)
 	Humanoid.StateChanged:Connect(function(old, new)
 		if new == Enum.HumanoidStateType.Landed then
 			self:OnLand()
@@ -87,6 +91,7 @@ end
 function HumanoidHandler:KnitStart()
 	PlayerService = Knit.GetService("PlayerService")
 	CameraController = Knit.GetController("CameraController")
+	StateController = Knit.GetController("StateController")
 end
 
 function HumanoidHandler:KnitInit()

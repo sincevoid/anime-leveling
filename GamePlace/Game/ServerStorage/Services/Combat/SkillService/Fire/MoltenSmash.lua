@@ -13,7 +13,7 @@ local RagdollService
 
 local Validate = require(game.ReplicatedStorage.Validate)
 
-local Cooldown = 20
+local Cooldown = 5
 function MoltenSmash.Charge(Humanoid: Humanoid, Data: { CasterCFrame: CFrame })
     DebounceService:AddDebounce(Humanoid, "MoltenSmash", Cooldown, true)
 	SkillService:SetSkillState(Humanoid, "MoltenSmash", "Charge")

@@ -23,7 +23,7 @@ end)
 
 function ListenerController.KnitStart()
 	TutorialController = Knit.GetController("TutorialController")
-	TutorialController:StartTutorial(game.Players.LocalPlayer)
+	--TutorialController:StartTutorial(game.Players.LocalPlayer)
 end
 
 return ListenerController

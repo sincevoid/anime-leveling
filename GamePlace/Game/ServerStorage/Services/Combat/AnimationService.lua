@@ -35,6 +35,7 @@ function AnimationService:GetAllAnimationEventNames(animID: string): table
 	return markers
 end
 
+
 function AnimationService:GetWeaponAnimationFolder(Humanoid: Humanoid)
 	local WeaponName = AnimationsFolder:FindFirstChild(Humanoid:GetAttribute("WeaponName") or "")
 	local WeaponType = AnimationsFolder:FindFirstChild(Humanoid:GetAttribute("WeaponType") or "")

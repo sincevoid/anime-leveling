@@ -30,13 +30,18 @@ function EquipService:EquipItem(Player: Player)
 
 	for _, m6: Motor6D in Tool:GetDescendants() do
 		if m6:IsA("Motor6D") then
-			m6:SetAttribute("CoreMotor6D", true)
+			local part = Character:FindFirstChild(m6.Name, true)
+			if part then
+				if part:IsA("BasePart") then
+					m6:SetAttribute("CoreMotor6D", true)
 
-			m6.Part0 = Character:FindFirstChild(m6.Name, true)
-			m6.Part1 = m6.Parent
+					m6.Part0 = Character:FindFirstChild(m6.Name, true)
+					m6.Part1 = m6.Parent
 
-			if not m6:GetAttribute("NoGrip") then
-				m6.C0 = Tool.Grip
+					if not m6:GetAttribute("NoGrip") then
+						m6.C0 = Tool.Grip
+					end
+				end
 			end
 		end
 	end
