@@ -37,7 +37,7 @@ function WeaponService:IncreaseComboCounter(Humanoid: Humanoid)
 	if not WeaponService:IsLastHit(Humanoid) then
 		Humanoid:SetAttribute("ComboCounter", Humanoid:GetAttribute("ComboCounter") + 1)
 	else
-		DebounceService:AddDebounce(Humanoid, "ComboDebounce", 1.5, true)
+		DebounceService:AddDebounce(Humanoid, "ComboDebounce", 1, true)
 		Humanoid:SetAttribute("ComboCounter", 0)
 	end
 end

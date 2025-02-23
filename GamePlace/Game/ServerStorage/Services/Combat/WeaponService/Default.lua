@@ -15,7 +15,8 @@ local Default = {
 	Attack = function(Character, Data)
 		local Humanoid = Character.Humanoid
 		local Tool = HotbarService:GetEquippedTool(Character)
-
+		
+		print(Tool)
 		if not Tool then
 			return
 		end
@@ -35,7 +36,7 @@ local Default = {
 		Animation:Play()
 
 		local SwingSpeed = Tool:GetAttribute("SwingSpeed") or 0.3
-		DebounceService:AddDebounce(Humanoid, "AttackCombo", SwingSpeed + 0.15)
+		DebounceService:AddDebounce(Humanoid, "AttackCombo", Animation.Length)
 		DebounceService:AddDebounce(Humanoid, "AttackDebounce", SwingSpeed)
 		Humanoid:SetAttribute("LastAttackTick", tick())
 
