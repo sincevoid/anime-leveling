@@ -17,6 +17,10 @@ local CombatService = Knit.CreateService({
 })
 
 function CombatService:GetExperienceByName(EnemyHumanoid: Humanoid)
+	if not GameData.gameEnemies[EnemyHumanoid.Parent.Name] then
+		warn("Enemy not found in GameData")
+		return
+	end
 	return GameData.gameEnemies[EnemyHumanoid.Parent.Name].Experience
 end
 

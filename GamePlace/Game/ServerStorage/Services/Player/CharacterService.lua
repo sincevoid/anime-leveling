@@ -42,9 +42,9 @@ function CharacterService:BindAttackTick(Humanoid: Humanoid)
 		while Humanoid:IsDescendantOf(workspace) do
 			repeat
 				task.wait(0.1)
-			until Humanoid:GetAttribute("LastAttackTick") + 2.5 <= tick()
+			until Humanoid:GetAttribute("LastAttackTick") + 1.5 <= tick()
 			Humanoid:SetAttribute("ComboCounter", 0)
-			Humanoid:GetAttributeChangedSignal("LastAttackTick"):Wait()
+			--Humanoid:GetAttributeChangedSignal("LastAttackTick"):Wait()
 		end
 	end)
 end

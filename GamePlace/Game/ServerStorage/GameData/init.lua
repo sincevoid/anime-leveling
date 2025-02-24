@@ -409,8 +409,8 @@ return {
 	gameEnemies = {
 		["Test"] = {
 			Health = 1000000000000000000,
-			ParryChance = 5,
-			BlockChance = 90,
+			ParryChance = 1,
+			BlockChance = 1,
 			Damage = 10,
 			Speed = 16,
 			Inteligence = 1,

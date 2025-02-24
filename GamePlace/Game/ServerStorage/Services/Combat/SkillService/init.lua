@@ -22,7 +22,6 @@ local WeaponService
 local RenderService
 
 function SkillService:UseSkill(Humanoid: Humanoid, SkillName: string, Data: { CasterCFrame: CFrame })
-	print(SkillName)
 	if not Skills[SkillName] then
 		return
 	end

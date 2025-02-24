@@ -1,4 +1,5 @@
 local ContextActionService = game:GetService("ContextActionService")
+local KeyframeSequenceProvider = game:GetService("KeyframeSequenceProvider")
 local DashScript = {}
 
 local Knit = require(game.ReplicatedStorage.Packages.Knit)
@@ -8,7 +9,7 @@ Knit.OnStart():await()
 local StatusController = Knit.GetController("StatusController")
 local CameraController = Knit.GetController("CameraController")
 local UIDebounceController = Knit.GetController("UIDebounceController")
-
+local AnimationService = Knit.GetService("AnimationService")
 local Debris = game:GetService("Debris")
 local Player = game:GetService("Players").LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -50,7 +51,7 @@ local function CreateAnimationWithID(id: string): AnimationTrack
 	a.AnimationId = `rbxassetid://{id}`
 
 	local track: AnimationTrack = Animator:LoadAnimation(a)
-
+	task.wait()
 	return track
 end
 
@@ -65,11 +66,13 @@ local DashAnimations = {
 	},
 	["L"] = {
 		speed = 1.5,
-		anim = CreateAnimationWithID("16526295276"),
+		anim = Animator:LoadAnimation(ReplicatedStorage.Animations.Mov.Dash.LeftDash),
+		id = "rbxassetid://16526295276"
 	},
 	["R"] = {
 		speed = 1.5,
-		anim = CreateAnimationWithID("16526290641"),
+		anim = Animator:LoadAnimation(ReplicatedStorage.Animations.Mov.Dash.RightDash),
+		id = "rbxassetid://16526290641"
 	},
 }
 
@@ -98,6 +101,8 @@ end
 
 local Cooldown = 0
 
+
+
 function DashScript:Dash()
 	local DashDirection = Humanoid.MoveDirection
 	if DashDirection.Magnitude < 0.1 then
@@ -121,7 +126,7 @@ function DashScript:Dash()
 	UIDebounceController:AddDebounce("Dash", 1.5)
 
 	local Animation
-
+	local ID
 	if IsMouseLocked() then
 		local WalkDirWorld = getWalkDirectionCameraSpace()
 
@@ -135,26 +140,43 @@ function DashScript:Dash()
 		elseif WalkDirWorld.Z < 0 then
 			DashDiretionString = "F"
 		end
-
 		if not DashDiretionString then
 			return
 		end
 
 		local id = DashAnimations[DashDiretionString or "F"] or DashAnimations.F
 		Animation = id.anim
+		if id and id.id then
+			Animation:Play()
+			Animation:GetMarkerReachedSignal("Dash"):Connect(function()
+				SFX:Apply(Character, "Dash")
+				local mass = GetModelMass(Character)
+				DashDirection = Humanoid.MoveDirection
+				if DashDirection.Magnitude < 0.1 then
+					DashDirection = HumanoidRootPart.CFrame.LookVector.Unit
+				end
+				local DashVelocity = DashDirection * 100 * mass
+				HumanoidRootPart.AssemblyLinearVelocity = DashVelocity
+			end)
+			Animation.Ended:Wait()
+		else
+			Animation = DashAnimations.F.anim
+			Animation:Play()
+			SFX:Apply(Character, "Dash")
+			local mass = GetModelMass(Character)
+			local DashVelocity = DashDirection * 100 * mass
+			HumanoidRootPart.AssemblyLinearVelocity = DashVelocity
+			Animation.Ended:Wait()
+		end
 	else
 		Animation = DashAnimations.F.anim
+		Animation:Play()
+		SFX:Apply(Character, "Dash")
+		local mass = GetModelMass(Character)
+		local DashVelocity = DashDirection * 100 * mass
+		HumanoidRootPart.AssemblyLinearVelocity = DashVelocity
+		Animation.Ended:Wait()
 	end
-
-	Animation:Play()
-
-	SFX:Apply(Character, "Dash")
-
-	local mass = GetModelMass(Character)
-	local DashVelocity = DashDirection * 100 * mass
-	HumanoidRootPart.AssemblyLinearVelocity = DashVelocity
-
-	Animation.Ended:Wait()
 end
 
 local DashButtons = { Enum.KeyCode.Q, Enum.KeyCode.ButtonL1 }

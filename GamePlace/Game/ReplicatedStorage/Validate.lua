@@ -2,20 +2,24 @@ local Validate = {}
 
 local function check(Humanoid: Humanoid, cant, debug)
 	if Humanoid.RootPart == nil then
+		--print("a")
 		return false
 	end
 
 	if Humanoid.RootPart.Anchored then
+		--print("b")
 		return false
 	end
 
 	if Humanoid.Health <= 0 then
+		--print("c")
 		return false
 	end
 	if Humanoid:GetAttribute("Ragdoll") then
+		--print("d")
 		return false
 	end
-
+	--print("e")
 	for _, att in ipairs(cant) do
 		if Humanoid:GetAttribute(att) == true then
 			if debug then

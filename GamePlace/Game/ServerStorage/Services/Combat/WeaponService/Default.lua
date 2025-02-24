@@ -16,7 +16,6 @@ local Default = {
 		local Humanoid = Character.Humanoid
 		local Tool = HotbarService:GetEquippedTool(Character)
 		
-		print(Tool)
 		if not Tool then
 			return
 		end
@@ -65,8 +64,8 @@ local Default = {
 
 					Enemy.PrimaryPart.AssemblyLinearVelocity = (
 						Humanoid.RootPart.CFrame.LookVector
-						* 200
-						* WeaponService:GetModelMass(Enemy.Parent)
+						* 
+						300
 					)
 				end
 

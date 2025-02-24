@@ -80,6 +80,7 @@ function AI.Start()
 			AlignOrientation.AlignType = Enum.AlignType.PrimaryAxisLookAt
 			AlignOrientation.Mode = Enum.OrientationAlignmentMode.OneAttachment
 			AlignOrientation.Attachment0 = Humanoid.RootPart:WaitForChild("RootAttachment")
+			AlignOrientation.Attachment0.CFrame *=  CFrame.Angles(0, math.rad(90), 0)
 			AlignOrientation.Responsiveness = 120
 			AlignOrientation.CFrame = Humanoid.RootPart.CFrame * CFrame.Angles(0, math.rad(math.random(0, 360)), 0)
 

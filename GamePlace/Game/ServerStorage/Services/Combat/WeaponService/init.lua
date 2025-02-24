@@ -148,11 +148,14 @@ function WeaponService:TypeBlockChecker(Humanoid: Humanoid, Data) ------------->
 		return
 	end
 
+	if not Data.ParryChance or not Data.BlockChance then return end
+
 	if Humanoid:GetAttribute("BlockChecker") then
 		return
 	end
 
 	DebounceService:AddDebounce(Humanoid, "BlockChecker", 0.3, false, true)
+	
 
 	local parryChance = Data.ParryChance / 100
 	local blockChance = Data.BlockChance / 100

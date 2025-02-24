@@ -28,22 +28,21 @@ Pistols = {
 			return
 		end
 		if not Validate:CanAttack(Humanoid) then
+            print("pode n")
 			return
 		end
-        print("attack")
 		local AnimationsFolder = AnimationService:GetWeaponAnimationFolder(Humanoid)
 
 		-- AnimationService:StopM1Animation(Humanoid)
 		local Counter = Humanoid:GetAttribute("ComboCounter")
-        Character.PrimaryPart.Anchored = true
 
 		local AnimationPath: Animation = AnimationsFolder.Hit[Counter]
 		local Animation: AnimationTrack = Humanoid.Animator:LoadAnimation(AnimationPath)
-        local Speed = Animation.Length/.75
+        local Speed = Animation.Length/1.3
 		Animation.Priority = Enum.AnimationPriority.Action
 		Animation.Name = "M1_" .. tostring(Counter)
 		Animation:Play()
-        Animation:AdjustSpeed(1)
+        Animation:AdjustSpeed(1.4)
         
 		local SwingSpeed = Tool:GetAttribute("SwingSpeed") or 0.3
 		DebounceService:AddDebounce(Humanoid, "AttackCombo", Speed, true)
@@ -79,14 +78,21 @@ Pistols = {
                 RaycastParam.FilterDescendantsInstances = {Character, workspace:WaitForChild("Debug")}
                 PlayerMouseInfo = Request:InvokeClient(Player, "GetMouseInfo")
                 
-                local Result = Workspace:Raycast(Origin.Position, (PlayerMouseInfo.MouseCFrame.Position - Origin.Position).Unit * 1000, RaycastParam)      
-                DebugService:CreatePartAtPos(PlayerMouseInfo.MouseCFrame.Position)    
+                local Result = Workspace:Raycast(Origin.Position, (PlayerMouseInfo.MouseCFrame.Position - Origin.Position).Unit * 1000, RaycastParam)
+                if Result then
+                    print(Result.Instance)
+                    local enemies = HitboxService:GetCharactersInCircleArea(Result.Position, .1)
+                    
+                    for _, Enemy in enemies do
+                        DebounceService:AddDebounce(Humanoid, "HitboxStart", 0.05)
+                        WeaponService:TriggerHittedEvent(Enemy.Humanoid, Humanoid)
+                        DamageService:TryHit(Enemy.Humanoid, Humanoid, Damage, "None")
+                    end
+
+                end      
+                
             end)
         end
-
-        task.delay(Animation.Length + (Animation.Length * .4), function()
-            Character.PrimaryPart.Anchored = false
-        end)
     end
 }
 

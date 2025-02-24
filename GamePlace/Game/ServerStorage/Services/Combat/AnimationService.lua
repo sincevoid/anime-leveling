@@ -20,18 +20,22 @@ end
 function AnimationService:GetAllAnimationEventNames(animID: string): table
 	local markers: table = {}
 	local ks: KeyframeSequence = KeyframeSequenceProvider:GetKeyframeSequenceAsync(animID)
-	local function recurse(parent: Instance)
-		for _, child in pairs(parent:GetChildren()) do
-			if child:IsA("KeyframeMarker") then
-				table.insert(markers, child)
+	local function recurse(ks)
+		for _, child : Keyframe in pairs(ks:GetKeyframes()) do
+			if #child:GetMarkers() > 0 then
+				for i,v in pairs(child:GetMarkers()) do
+					table.insert(markers, v)
+				end
 			end
-			if #child:GetChildren() > 0 then
-				recurse(child)
-			end
+			--if child:IsA("KeyframeMarker") then
+			--	table.insert(markers, child)
+			--end
+			--if #child:GetChildren() > 0 then
+			--	recurse(child)
+			--end
 		end
 	end
 	recurse(ks)
-
 	return markers
 end
 

@@ -37,9 +37,10 @@ function DamageService:Hit(
 	if ShouldStun == nil then
 		ShouldStun = true
 	end
-
 	SkillService:TryCancelSkillsStates(HumanoidHitted)
+	print(ShouldStun)
 	if ShouldStun then
+		print("d")
 		DebounceService:AddDebounce(HumanoidHitted, "Hit", 1)
 		HumanoidHitted:SetAttribute("Running", false)
 		AnimationService:StopM1Animation(HumanoidHitted)
@@ -102,7 +103,7 @@ function DamageService:TryHit(
 	HumanoidHitted: Humanoid,
 	Humanoid: Humanoid,
 	_Damage: number,
-	HitEffect: string,
+	HitEffect: string?,
 	ShouldStun: boolean?
 )
 	if HumanoidHitted == nil then
@@ -147,13 +148,16 @@ function DamageService:TryHit(
 	---not HumanoidHitted:GetAttribute("Unparryable")
 	task.wait()
 	if HumanoidHitted:GetAttribute("DeflectTime") and not HumanoidHitted:GetAttribute("Unparryable") then
+		print("a")
 		DamageService:DeflectHit(HumanoidHitted, Humanoid, DeflectPostureDamage)
 		return false
 	else
 		if HumanoidHitted:GetAttribute("Block") and not HumanoidHitted:GetAttribute("Unparryable") then
+			print("b")
 			DamageService:BlockHit(HumanoidHitted, Humanoid, BlockPostureDamage)
 			return false
 		else
+			print("c")
 			DamageService:Hit(HumanoidHitted, Humanoid, Damage, HitEffect, ShouldStun)
 		end
 	end
