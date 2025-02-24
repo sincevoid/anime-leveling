@@ -14,6 +14,7 @@ local HotbarController = Knit.CreateController({
 	Name = "HotbarController",
 })
 
+local WeaponService
 local BlockController
 local HotbarService
 local PlayerService
@@ -21,6 +22,8 @@ local SkillService
 local isHolding
 
 local Events = {}
+local Cache = {}
+
 
 function HotbarController.FireServer(...)
 	HotbarService:OnFireServer(...)
@@ -34,11 +37,19 @@ function HotbarController.ChangeItem(tool: Tool)
 					if t == tool then
 						continue
 					end
+					ContextActionService:UnbindAction(`HeavyAttack_{t.Name}`)
 					t.Parent = Player.Backpack
 				end
 			end
-
 			tool.Parent = Character
+			local HeavyAttackButtons = {Enum.KeyCode.R}
+
+			ContextActionService:BindAction(`HeavyAttack_{tool.Name}`,function(action, state)
+				if state ~= Enum.UserInputState.Begin then
+					return Enum.ContextActionResult.Pass
+				end
+				WeaponService:WeaponInput("StrongAttack")
+			end, true, table.unpack(HeavyAttackButtons))
 		else
 			if not isHolding then
 				SkillService:UseSkill(tool.Name, { CasterCFrame = Character:GetPivot() })
@@ -366,6 +377,7 @@ function HotbarController:RenderHotbar()
 end
 
 function HotbarController.KnitStart()
+	WeaponService = Knit.GetService("WeaponService")
 	HotbarService = Knit.GetService("HotbarService")
 	BlockController = Knit.GetController("BlockController")
 	PlayerService = Knit.GetService("PlayerService")
