@@ -27,12 +27,6 @@ function AnimationService:GetAllAnimationEventNames(animID: string): table
 					table.insert(markers, v)
 				end
 			end
-			--if child:IsA("KeyframeMarker") then
-			--	table.insert(markers, child)
-			--end
-			--if #child:GetChildren() > 0 then
-			--	recurse(child)
-			--end
 		end
 	end
 	recurse(ks)

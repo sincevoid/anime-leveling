@@ -92,17 +92,6 @@ local Default = {
 	end,
 
 	StrongAttack = function(Character, Data) 
-		local Humanoid = Character.Humanoid
-		local Tool = HotbarService:GetEquippedTool(Character)
-		
-		if not Tool then
-			return
-		end
-		if not Validate:CanAttack(Humanoid) then
-			return
-		end
-
-		local AnimationsFolder = AnimationService:GetWeaponAnimationFolder(Humanoid)
 	end,
 }
 

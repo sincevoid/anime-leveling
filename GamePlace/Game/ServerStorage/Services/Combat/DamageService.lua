@@ -109,7 +109,7 @@ function DamageService:TryHit(
 	if HumanoidHitted == nil then
 		return
 	end
-
+	
 	if HumanoidHitted:GetAttribute("IFrame") then
 		return
 	end

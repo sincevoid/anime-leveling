@@ -2,6 +2,7 @@ local CharacterSharedFunctions = {}
 function CharacterSharedFunctions:ChangeWalkSpeed(humanoid: Humanoid, amount: number?, overwrite: string?)
 	local function change(toChange, walkspeed)
 		if toChange == overwrite then
+			print("a")
 			humanoid.WalkSpeed = amount
 		else
 			humanoid.WalkSpeed = walkspeed

@@ -133,9 +133,9 @@ function CharacterService:UpdateJumpPower(Humanoid: Humanoid, newJumpPower: numb
 	CharacterSharedFunctions:ChangeJumpPower(Humanoid, newJumpPower)
 end
 
-function CharacterService:UpdateWalkSpeedAndJumpPower(Humanoid: Humanoid)
-	CharacterService:UpdateWalkSpeed(Humanoid)
-	CharacterService:UpdateJumpPower(Humanoid)
+function CharacterService:UpdateWalkSpeedAndJumpPower(Humanoid: Humanoid, ws, jp)
+	CharacterService:UpdateWalkSpeed(Humanoid, ws)
+	CharacterService:UpdateJumpPower(Humanoid, jp)
 end
 
 function CharacterService.KnitStart()
