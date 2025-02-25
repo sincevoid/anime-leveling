@@ -78,7 +78,7 @@ Pistols = {
                 RaycastParam.FilterDescendantsInstances = {Character, workspace:WaitForChild("Debug")}
                 PlayerMouseInfo = Request:InvokeClient(Player, "GetMouseInfo")
                 
-                local Result = Workspace:Raycast(Origin.Position, (PlayerMouseInfo.MouseCFrame.Position - Origin.Position).Unit * 1000, RaycastParam)
+                local Result = Workspace:Spherecast(Origin.Position,.5,(PlayerMouseInfo.MouseCFrame.Position - Origin.Position).Unit * 1000, RaycastParam)
                 if Result then
                     print(Result.Instance)
                     local enemies = HitboxService:GetCharactersInCircleArea(Result.Position, .1)
