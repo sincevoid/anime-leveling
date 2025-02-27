@@ -40,10 +40,11 @@ end
 
 function EnemyService.KnitStart()
 	--> criar inimigos
-	
+	print("Creating enemies")
 	local Enemies = workspace.Test:GetChildren()
 	for _, enemy in Enemies do
 		if enemy:IsA("Model") then
+			print(enemy)
 			EnemyService:CreateEnemy(enemy)
 		end
 	end

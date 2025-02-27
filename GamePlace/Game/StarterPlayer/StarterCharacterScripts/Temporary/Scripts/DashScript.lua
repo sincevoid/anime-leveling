@@ -58,11 +58,11 @@ end
 local DashAnimations = {
 	["F"] = {
 		speed = 1,
-		anim = CreateAnimationWithID("16526303689"),
+		anim = CreateAnimationWithID("102026159705609"),
 	},
 	["B"] = {
 		speed = 1,
-		anim = CreateAnimationWithID("16526306820"),
+		anim = CreateAnimationWithID("102451754542993"),
 	},
 	["L"] = {
 		speed = 1.5,
@@ -144,6 +144,7 @@ function DashScript:Dash()
 			return
 		end
 
+		
 		local id = DashAnimations[DashDiretionString or "F"] or DashAnimations.F
 		Animation = id.anim
 		if id and id.id then
@@ -160,7 +161,7 @@ function DashScript:Dash()
 			end)
 			Animation.Ended:Wait()
 		else
-			Animation = DashAnimations.F.anim
+			Animation = id.anim
 			Animation:Play()
 			SFX:Apply(Character, "Dash")
 			local mass = GetModelMass(Character)

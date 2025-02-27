@@ -17,7 +17,7 @@ local RagdollService
 local Validate = require(game.ReplicatedStorage.Validate)
 
 function DefaultStrongAttack.Stomp(Humanoid: Humanoid, Data: { CasterCFrame: CFrame })
-    DebounceService:AddDebounce(Humanoid, "DefaultStrongAttack", 5, true)
+    DebounceService:AddDebounce(Humanoid, "DefaultStrongAttack", 1, true)
 
 
     local Tool = HotbarService:GetEquippedTool(Humanoid.Parent)
@@ -47,7 +47,7 @@ function DefaultStrongAttack.Stomp(Humanoid: Humanoid, Data: { CasterCFrame: CFr
             })
 	        RenderService:RenderForPlayers(StompRenderData)
 
-            HitboxService:CreateFixedHitbox(Humanoid.Parent.PrimaryPart.CFrame, Vector3.new(16, 2, 16) * 2, 1, function(Enemy)
+            HitboxService:CreateFixedHitbox(Humanoid.Parent.PrimaryPart.CFrame, Vector3.new(23, 2, 23), 1, function(Enemy)
                 if Enemy == Humanoid.Parent.PrimaryPart then
                     return
                 end
@@ -56,9 +56,9 @@ function DefaultStrongAttack.Stomp(Humanoid: Humanoid, Data: { CasterCFrame: CFr
                     RagdollService:Ragdoll(Enemy, 1)
                     local EnemyPrimaryPartPosition = Enemy.PrimaryPart.Position :: Vector3
                     local PrimaryPartPos = Humanoid.Parent.PrimaryPart.Position :: Vector3
-                    local deltaZ = EnemyPrimaryPartPosition.Z - PrimaryPartPos.Z
-                    local deltaX = EnemyPrimaryPartPosition.X - PrimaryPartPos.X
-                    Enemy.PrimaryPart.AssemblyLinearVelocity = Vector3.new(50/deltaX,10,50/deltaZ)  * WeaponService:GetModelMass(Enemy)
+                    local deltaZ = math.min(math.abs(EnemyPrimaryPartPosition.Z - PrimaryPartPos.Z), 100)
+                    local deltaX = math.min(math.abs(EnemyPrimaryPartPosition.X - PrimaryPartPos.X), 100)
+                    Enemy.PrimaryPart.AssemblyLinearVelocity = Vector3.new(20/math.max(deltaX, 1),10,20/math.max(deltaZ, 1))  * (WeaponService:GetModelMass(Enemy) * .6)
                 end
                 DamageService:TryHit(Enemy.Humanoid, Humanoid, 20)
             end)
