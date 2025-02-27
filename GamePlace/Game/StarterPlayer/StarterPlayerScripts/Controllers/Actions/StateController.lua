@@ -52,7 +52,7 @@ function StateController:Update()
 end
 
 function StateController.KnitStart()
-	StateController:Update()
+	--StateController:Update()
 end
 
 return StateController

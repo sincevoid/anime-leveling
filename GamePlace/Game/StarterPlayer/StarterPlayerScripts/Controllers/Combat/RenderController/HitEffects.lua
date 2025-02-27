@@ -15,6 +15,8 @@ function HitEffects.Default(RenderData)
 		return
 	end
 
+	if not EffectsFolder:FindFirstChild(RenderData.effect) then return end
+
 	local Effect = EffectsFolder[RenderData.effect]:Clone()
 
 	local Weld = Instance.new("WeldConstraint")

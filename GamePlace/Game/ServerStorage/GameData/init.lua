@@ -409,13 +409,13 @@ return {
 	gameEnemies = {
 		["Test"] = {
 			Health = 1000000000000000000,
-			ParryChance = 1,
-			BlockChance = 1,
+			ParryChance = 10,
+			BlockChance = 40,
 			Damage = 10,
 			Speed = 16,
 			Inteligence = 1,
 			Experience = 100,
-			AttackType = "Melee",
+			AttackType = "Sword",
 			Gold = 100,
 			PoolDrop = {
 				["S"] = 2,

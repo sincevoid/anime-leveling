@@ -13,6 +13,7 @@ local DebounceService
 local CharacterService
 local HotbarService
 local AnimationService
+local RenderService
 local RagdollService
 local DebugService
 
@@ -28,7 +29,6 @@ Pistols = {
 			return
 		end
 		if not Validate:CanAttack(Humanoid) then
-            print("pode n")
 			return
 		end
 		local AnimationsFolder = AnimationService:GetWeaponAnimationFolder(Humanoid)
@@ -73,17 +73,19 @@ Pistols = {
                         Origin = Tool:WaitForChild("LeftArm"):FindFirstChild("Origin", true)
                     end
                 end
+                local shotRenderData = RenderService:CreateRenderData(Character.Humanoid, "Shots", "Default", {Origin = Origin})
+                RenderService:RenderForPlayers(shotRenderData)
                 local RaycastParam = RaycastParams.new()
                 RaycastParam.FilterType = Enum.RaycastFilterType.Exclude
                 RaycastParam.FilterDescendantsInstances = {Character, workspace:WaitForChild("Debug")}
                 PlayerMouseInfo = Request:InvokeClient(Player, "GetMouseInfo")
                 
-                local Result = Workspace:Spherecast(Origin.Position,.5,(PlayerMouseInfo.MouseCFrame.Position - Origin.Position).Unit * 1000, RaycastParam)
+                local Result = Workspace:Spherecast(Origin.Position,.1,(PlayerMouseInfo.MouseCFrame.Position - Origin.Position).Unit * 1000, RaycastParam)
                 if Result then
-                    print(Result.Instance)
                     local enemies = HitboxService:GetCharactersInCircleArea(Result.Position, .1)
                     
                     for _, Enemy in enemies do
+                        
                         DebounceService:AddDebounce(Humanoid, "HitboxStart", 0.05)
                         WeaponService:TriggerHittedEvent(Enemy.Humanoid, Humanoid)
                         DamageService:TryHit(Enemy.Humanoid, Humanoid, Damage, "None")
@@ -102,6 +104,7 @@ Pistols.Start = function(default)
 
     DebugService = Knit.GetService("DebugService")
     RagdollService = Knit.GetService("RagdollService")
+    RenderService = Knit.GetService("RenderService")
 	WeaponService = Knit.GetService("WeaponService")
 	HitboxService = Knit.GetService("HitboxService")
 	DamageService = Knit.GetService("DamageService")

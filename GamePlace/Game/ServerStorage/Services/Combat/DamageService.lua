@@ -38,9 +38,7 @@ function DamageService:Hit(
 		ShouldStun = true
 	end
 	SkillService:TryCancelSkillsStates(HumanoidHitted)
-	print(ShouldStun)
 	if ShouldStun then
-		print("d")
 		DebounceService:AddDebounce(HumanoidHitted, "Hit", 1)
 		HumanoidHitted:SetAttribute("Running", false)
 		AnimationService:StopM1Animation(HumanoidHitted)
@@ -76,17 +74,28 @@ function DamageService:BlockHit(HumanoidHitted: Humanoid, Humanoid: Humanoid, Bl
 end
 
 function DamageService:DeflectHit(HumanoidHitted: Humanoid, Humanoid: Humanoid, DeflectPostureDamage: number)
-	HumanoidHitted:SetAttribute("HitCounter", 0)
-	DebounceService:AddDebounce(HumanoidHitted, "DeflectTime", 0.125)
-	PostureService:RemovePostureDamage(HumanoidHitted, 10)
-	Humanoid:SetAttribute("Deflected", true)
-	PostureService:AddPostureDamage(Humanoid, HumanoidHitted, DeflectPostureDamage, true)
-	DebounceService:RemoveDebounce(HumanoidHitted, "Hit")
-	-- DebounceService:RemoveDebounce(HumanoidHitted, "Blocked")
-	Humanoid:SetAttribute("ComboCounter", 0)
-	HumanoidHitted:SetAttribute("BlockEndLag", false)
-
-	AnimationService:StopM1Animation(Humanoid)
+	local Tool1, Tool2 = HumanoidHitted.Parent:FindFirstChildOfClass("Tool"), Humanoid.Parent:FindFirstChildOfClass("Tool")
+	if Tool1 then
+		local Type1, Type2 = Tool1:GetAttribute("Type"), Tool2:GetAttribute("Type")
+		if Type1 == "Katana" and Type2 == "Pistols" then
+			HumanoidHitted:SetAttribute("HitCounter", 0)
+			DamageService:Hit(Humanoid, HumanoidHitted, 10, "Dagger", false)
+			HumanoidHitted:SetAttribute("BlockEndLag", false)
+			AnimationService:StopM1Animation(Humanoid)
+		else
+			print(HumanoidHitted.Parent, Humanoid.Parent)
+			print(Type1,Type2)
+			HumanoidHitted:SetAttribute("HitCounter", 0)
+			DebounceService:AddDebounce(HumanoidHitted, "DeflectTime", 0.125)
+			PostureService:RemovePostureDamage(HumanoidHitted, 10)
+			Humanoid:SetAttribute("Deflected", true)
+			PostureService:AddPostureDamage(Humanoid, HumanoidHitted, DeflectPostureDamage, true)
+			DebounceService:RemoveDebounce(HumanoidHitted, "Hit")
+			Humanoid:SetAttribute("ComboCounter", 0)
+			HumanoidHitted:SetAttribute("BlockEndLag", false)
+			AnimationService:StopM1Animation(Humanoid)
+		end
+	end
 
 	task.delay(1, function()
 		Humanoid:SetAttribute("Deflected", false)
@@ -148,16 +157,13 @@ function DamageService:TryHit(
 	---not HumanoidHitted:GetAttribute("Unparryable")
 	task.wait()
 	if HumanoidHitted:GetAttribute("DeflectTime") and not HumanoidHitted:GetAttribute("Unparryable") then
-		print("a")
 		DamageService:DeflectHit(HumanoidHitted, Humanoid, DeflectPostureDamage)
 		return false
 	else
 		if HumanoidHitted:GetAttribute("Block") and not HumanoidHitted:GetAttribute("Unparryable") then
-			print("b")
 			DamageService:BlockHit(HumanoidHitted, Humanoid, BlockPostureDamage)
 			return false
 		else
-			print("c")
 			DamageService:Hit(HumanoidHitted, Humanoid, Damage, HitEffect, ShouldStun)
 		end
 	end

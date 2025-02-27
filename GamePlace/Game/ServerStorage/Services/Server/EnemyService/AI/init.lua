@@ -1,7 +1,10 @@
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local ServerStorage = game:GetService("ServerStorage")
 local Knit = require(game.ReplicatedStorage.Packages.Knit)
+
 
 local AI = {}
 
@@ -17,13 +20,27 @@ function AI.Start()
 			
 			local EquipService = Knit.GetService("EquipService")
 			local DebounceService = Knit.GetService("DebounceService")
+			local AnimationService = Knit.GetService("AnimationService")
 			
 			local NPC: Model = script:FindFirstAncestorOfClass("Model")
 			local Humanoid: Humanoid = NPC:FindFirstChildWhichIsA("Humanoid", true)
 			local Animator = Humanoid:FindFirstChildWhichIsA("Animator") :: Animator
 
 			local weaponName = NPC:GetAttribute("Weapon") or "Fists"
+			
+			local Type
 
+			for tn,t in pairs(ServerStorage.GameData.Items:GetChildren()) do
+				if t:IsA("ModuleScript") then
+					local types = require(t)
+					for i,v in pairs(types) do
+						if i == weaponName then
+							Type = t.Name
+							break
+						end
+					end
+				end
+			end
 
 			local Weapon: Tool = ToolsFolder:FindFirstChild(weaponName) or ToolsFolder:WaitForChild("Fists", 10)
 
@@ -31,6 +48,12 @@ function AI.Start()
 				Weapon = Weapon:Clone()
 				Weapon:SetAttribute("Class", "Weapon")
 				Weapon.Parent = NPC
+				Humanoid:SetAttribute("WeaponName", Weapon.Name)
+				if Type then
+					Humanoid:SetAttribute("WeaponType", Type)
+					Weapon:SetAttribute("Type", Type)
+					Weapon:SetAttribute("Weapon", nil)
+				end
 			end
 
 			local HittedEvent = Instance.new("BindableEvent", script)
@@ -59,6 +82,8 @@ function AI.Start()
 			
 			task.wait()
 			
+			AI.AnimationsFolder = AnimationService:GetWeaponAnimationFolder(Humanoid)
+			print(AI.AnimationsFolder)
 			AI.AnimationsTable = {
 				["Melee"] = {
 					["Hit"] = {

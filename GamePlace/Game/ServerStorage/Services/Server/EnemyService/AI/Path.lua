@@ -50,11 +50,7 @@ local Task: thread = nil
 local Align: AlignOrientation = nil
 local Randomizer = Random.new()
 
-local Skills = {
-	"FlashStrike",
-	"CinderCutter",
-	"MoltenSmash"
-}
+local Skills = {}
 
 local loop = function(thread: () -> any, ...)
 	return task.spawn(function(...)
@@ -203,8 +199,10 @@ do
 							DebounceService:AddDebounce(Target.Parent.Humanoid, "BeingAttacked", 1)
 							DebounceService:AddDebounce(From, "Attacking", 1)
 							Path.AlignOriDb = true
-							local Skill = Skills[math.random(1, #Skills)]
-							SkillService:UseSkill(From, Skill, { Damage = Path.Data.Damage })
+							if #Skills > 0 then
+								local Skill = Skills[math.random(1, #Skills)]
+								SkillService:UseSkill(From, Skill, { Damage = Path.Data.Damage })
+							end
 							task.delay(5, function()
 								Path.AlignOriDb = false
 							end)

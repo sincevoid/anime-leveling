@@ -1,4 +1,5 @@
 local CollectionService = game:GetService("CollectionService")
+local Debris = game:GetService("Debris")
 local Knit = require(game.ReplicatedStorage.Packages.Knit)
 
 local RenderController = Knit.CreateController({
@@ -171,7 +172,23 @@ function RenderController:Emit(particle)
 	particle:Emit(particle:GetAttribute("EmitCount") or 1)
 end
 
-function RenderController:EmitParticles(parent)
+function RenderController:EmitParticles(parent, putInVfxFolder: boolean?)
+	if putInVfxFolder then
+		if parent:IsA("Attachment") then
+			local vfxPart = Instance.new("Part", workspace.VFXs)
+			vfxPart.Size = Vector3.new(0.1, 0.1, 0.1)
+			vfxPart.Anchored = true
+			vfxPart.CanCollide = false
+			vfxPart.Transparency = 1
+			vfxPart.CFrame = parent.WorldCFrame
+			vfxPart.CanQuery = false
+			vfxPart.CanTouch = false
+			parent.Parent = vfxPart
+			Debris:AddItem(vfxPart, 2)
+		else
+			parent.Parent = workspace.VFXs
+		end
+	end
 	for i, v in parent:GetDescendants() do
 		if not v:IsA("ParticleEmitter") then
 			continue
