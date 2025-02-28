@@ -38,6 +38,7 @@ function EffectService:CheckHumanoid(Humanoid: Humanoid)
 	end
 end
 
+
 function EffectService:UpdateHumanoidEffects(Humanoid: Humanoid, EffectType: string)
 	local EffectTypes = {
 		Health = function()

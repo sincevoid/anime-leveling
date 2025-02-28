@@ -1,4 +1,5 @@
 local ContentProvider = game:GetService("ContentProvider")
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
 local Knit = require(game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"))
 
 if not game:IsLoaded() then
@@ -35,6 +36,7 @@ end
 
 Knit.Start({ ServicePromises = false }):andThen(function()
 	print("Knit client started")
+	ReplicatedFirst:SetAttribute("KnitClientLoaded", true)
 end)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

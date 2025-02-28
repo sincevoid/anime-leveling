@@ -1,11 +1,15 @@
 local Knit = require(game.ReplicatedStorage.Packages.Knit)
 
+
 local AnimationService = Knit.CreateService({
 	Name = "AnimationService",
 })
 
+local PlayerService
+
 local AnimationsFolder = game.ReplicatedStorage.Animations
 local KeyframeSequenceProvider = game:GetService("KeyframeSequenceProvider")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 function AnimationService:StopAllAnimations(Humanoid: Humanoid, transition: number?, ignore: string?)
 	local Animator: Animator = Humanoid:WaitForChild("Animator")
@@ -33,6 +37,31 @@ function AnimationService:GetAllAnimationEventNames(animID: string): table
 	return markers
 end
 
+function AnimationService:GetAllInventoryAnimsAsync(Player : Player)
+	local PlayerData = PlayerService:GetData(Player)
+	local Inventory = PlayerData.Inventory
+	local Anims = {}
+	for i,v in pairs(Inventory) do
+		if ReplicatedStorage.Animations:FindFirstChild(v.Name) then
+			for j,k in pairs(ReplicatedStorage.Animations[v.Name]:GetDescendants()) do
+				if k:IsA("Animation") then
+					table.insert(Anims, k)
+				end
+			end
+		elseif ReplicatedStorage.Animations:FindFirstChild(v.Class) then
+			for j,k in pairs(ReplicatedStorage.Animations[v.Class]:GetDescendants()) do
+				if k:IsA("Animation") then
+					table.insert(Anims, k)
+				end
+			end
+		end
+	end
+	return Anims
+end
+
+function AnimationService.Client:GetAllInventoryAnimsAsync(Player)
+	return self.Server:GetAllInventoryAnimsAsync(Player)
+end
 
 function AnimationService:GetWeaponAnimationFolder(Humanoid: Humanoid)
 	local WeaponName = AnimationsFolder:FindFirstChild(Humanoid:GetAttribute("WeaponName") or "")
@@ -63,6 +92,8 @@ function AnimationService:StopM1Animation(Humanoid: Humanoid)
 	end
 end
 
-function AnimationService.KnitStart() end
+function AnimationService.KnitStart() 
+	PlayerService = Knit.GetService("PlayerService")
+end
 
 return AnimationService
