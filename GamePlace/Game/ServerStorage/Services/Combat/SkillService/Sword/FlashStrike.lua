@@ -50,7 +50,7 @@ function FlashStrike.Attack(Humanoid: Humanoid, Data)
 	Params.FilterType = Enum.RaycastFilterType.Exclude
 
 	local Distance = 34
-	local raycast = workspace:Spherecast(RootPart.CFrame.Position, 3, (RootPart.CFrame.LookVector * Distance), Params)
+	local raycast = workspace:Spherecast(RootPart.CFrame.Position, 3, (RootPart.CFrame.LookVector * Distance), Params) :: RaycastResult
 	local DefaltDistance = 34
 	if raycast then
 		Distance = raycast.Distance
@@ -92,9 +92,11 @@ function FlashStrike.Attack(Humanoid: Humanoid, Data)
 		if not Enemy:FindFirstChild("Humanoid") then
 			return
 		end
+		
+
 
 		local EnemyHumanoid = Enemy:FindFirstChild("Humanoid")
-
+		Enemy.PrimaryPart.Anchored = true
 		task.spawn(function()
 			local EmitDelayed = false
 			if DamageService:GetHitContext(Enemy.Humanoid) == "Hit" then
@@ -131,14 +133,15 @@ function FlashStrike.Attack(Humanoid: Humanoid, Data)
 	task.wait(1.85)
 	for _, Enemy in Enemies do
 		DamageService:TryHit(Enemy.Humanoid, Humanoid, Damage * 2, "Sword")
+		Enemy.PrimaryPart.Anchored = false
 	end
 
 	DebounceService:RemoveDebounce(Humanoid, "UsingSkill")
 	SkillService:SetSkillState(Humanoid, "FlashStrike", nil)
 end
 
-function FlashStrike.Hit(HumanoidHitted: Humanoid, EmitDelayed: boolean?, HumanoidWhoHitted: Humanoid)
-	local HitRenderData = RenderService:CreateRenderData(HumanoidHitted, "FlashStrike", "Hit", {EmitDelayed = EmitDelayed or false, HumanoidWhoHitted = HumanoidWhoHitted})
+function FlashStrike.Hit(HumanoidHitted: Humanoid, EmitDelayed: boolean?, HumanoidWhoHitted: Humanoid, HumanoidV : Humanoid)
+	local HitRenderData = RenderService:CreateRenderData(HumanoidHitted, "FlashStrike", "Hit", {EmitDelayed = EmitDelayed or false, HumanoidWhoHitted = HumanoidWhoHitted, HumanoidV = HumanoidV})
 	RenderService:RenderForPlayers(HitRenderData)
 end
 

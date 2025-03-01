@@ -1,4 +1,6 @@
 local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 local Knit = require(game.ReplicatedStorage.Packages.Knit)
 local FlashStrike = {}
 
@@ -9,14 +11,13 @@ local RenderController
 local ShakerController
 
 function FlashStrike.Charge(RenderData)
-	local casterHumanoid = RenderData.casterHumanoid
+	local casterHumanoid = RenderData.casterHumanoid :: Humanoid
 
 	RenderController:ExecuteForHumanoid(casterHumanoid, function()
 		local Animation: AnimationTrack = RenderController:GetPlayingAnimationTrack(casterHumanoid, "FlashStrike")
 		if not Animation then
 			return
 		end
-
 		local connection
 		connection = Animation:GetMarkerReachedSignal("attack"):Once(function()
 			ShakerController:Shake(ShakerController.Presets.Bump)
@@ -25,9 +26,49 @@ function FlashStrike.Charge(RenderData)
 		Animation.Ended:Once(function()
 			connection:Disconnect()
 		end)
-
+		
 		ShakerController:Shake(ShakerController.Presets.Bump2)
 	end)
+end
+
+function FlashStrike.ImpactFrame()
+	local Folder = Instance.new("Folder", game:GetService("Lighting"))
+	local TargetFrames = 8
+	local CurrentFrame = 0
+	local BrightImpactFrame , DarkImpactFrame = ReplicatedStorage.VFX.ImpactFrames.BrightFlashStrike:Clone(), ReplicatedStorage.VFX.ImpactFrames.DarkFlashStrike:Clone()
+	local ShowingImpact = false
+
+
+	local ExecutionData = {
+		{
+			Frame = BrightImpactFrame,
+			Secs = .03
+		},
+		{
+			Frame = DarkImpactFrame,
+			Secs = .05
+		}
+	}
+	for i,v in pairs(game:GetService("Lighting"):GetChildren()) do
+		if v == Folder then continue end
+		v.Parent = Folder
+	end
+
+	BrightImpactFrame.Parent = game:GetService("Lighting")
+	DarkImpactFrame.Parent = game:GetService("Lighting")
+
+	for i,v in pairs(ExecutionData) do
+		v.Frame.Enabled = true
+		ShowingImpact = true
+		task.wait(v.Secs)
+		v.Frame:Destroy()
+	end
+
+	for i,v in pairs(Folder:GetChildren()) do
+		v.Parent = game:GetService("Lighting")
+	end
+	Folder:Destroy()
+
 end
 
 function FlashStrike.Attack(RenderData)
@@ -46,13 +87,18 @@ function FlashStrike.Hit(RenderData)
 	local FlashStrikeMultipleSlashes = game.ReplicatedStorage.VFX.Sword.FlashStrike.MultipleSlashes:Clone()
 	FlashStrikeMultipleSlashes:PivotTo(casterRootCFrame)
 	FlashStrikeMultipleSlashes.Parent = game.Workspace
-	RenderController:EmitParticles(FlashStrikeMultipleSlashes.Main.Attachment)
+	FlashStrikeMultipleSlashes.Main.CFrame = casterRootCFrame
+	RenderController:EmitParticles(FlashStrikeMultipleSlashes.Main)
 	RenderController:EmitParticles(FlashStrikeMultipleSlashes.Stars)
-
+	
 	if RenderData.arguments.EmitDelayed then
-		RenderController:EmitParticles(FlashStrikeMultipleSlashes.Main.DelayedHit)
+		RenderController:EmitParticles(FlashStrikeMultipleSlashes.Main2.DelayedHit)
 
 		task.delay(2.15, function()
+			task.delay(.13, function()
+				ShakerController:ShakeOnce(10, 20, 0.1, 0.3)
+				FlashStrike.ImpactFrame()
+			end)
 			SFX:Create(RenderData.casterHumanoid.RootPart, "FlashStrikeSlash", 0, 72)
 		end)
 	end
