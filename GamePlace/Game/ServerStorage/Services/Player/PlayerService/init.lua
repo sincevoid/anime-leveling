@@ -21,6 +21,7 @@ local Managers: { [number]: typeof(PlayerManager) | nil } = {}
 -- Connections
 -- ========================================
 function PlayerService:Respawn(player: Player)
+	
 	CharacterService:LoadCharacter(player)
 end
 

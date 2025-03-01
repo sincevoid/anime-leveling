@@ -65,7 +65,7 @@ local Default = {
 					Enemy.PrimaryPart.AssemblyLinearVelocity = (
 						Humanoid.RootPart.CFrame.LookVector
 						* 
-						300
+						200
 					)
 				end
 

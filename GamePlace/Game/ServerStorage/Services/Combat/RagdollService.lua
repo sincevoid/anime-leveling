@@ -42,6 +42,7 @@ end
 
 Players.PlayerAdded:Connect(function(Player)
 	Player.CharacterAdded:Connect(function(Character)
+		
 		local Humanoid = Character:WaitForChild("Humanoid")
 
 		Character.HumanoidRootPart.AncestryChanged:Connect(function()

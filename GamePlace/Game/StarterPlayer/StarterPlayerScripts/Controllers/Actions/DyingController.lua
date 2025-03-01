@@ -167,6 +167,7 @@ function DyingController.OnDie()
 			RunService:UnbindFromRenderStep("DyingController")
 
 			game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+			game.Workspace.CurrentCamera.FieldOfView = 70
 		end
 
 		healthConnection = humanoid.HealthChanged:Once(onRespawn)
@@ -183,6 +184,7 @@ function DyingController.Start()
 		local function onCharacterAdded(newCharacter)
 			character = newCharacter
 			humanoid = character:WaitForChild("Humanoid")
+			game.Workspace.CurrentCamera.FieldOfView = 70
 			humanoid.Died:Once(DyingController.OnDie)
 		end
 
