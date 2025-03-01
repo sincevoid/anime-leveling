@@ -86,7 +86,7 @@ local Default = {
 		end
 
 		WeaponService:IncreaseComboCounter(Humanoid)
-		task.delay(SwingSpeed + 0.15, function()
+		task.delay(Animation.Length, function()
 			CharacterService:UpdateWalkSpeedAndJumpPower(Humanoid)
 		end)
 	end,

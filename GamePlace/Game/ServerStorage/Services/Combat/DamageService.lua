@@ -96,9 +96,12 @@ function DamageService:DeflectHit(HumanoidHitted: Humanoid, Humanoid: Humanoid, 
 			AnimationService:StopM1Animation(Humanoid)
 		end
 	end
-
+	
+	CharacterService:UpdateWalkSpeedAndJumpPower(Humanoid)
+	
 	task.delay(1, function()
 		Humanoid:SetAttribute("Deflected", false)
+		CharacterService:UpdateWalkSpeedAndJumpPower(HumanoidHitted)
 	end)
 
 	task.spawn(function()
